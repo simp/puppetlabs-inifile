@@ -17,7 +17,7 @@ module Util
       else
         @subsetting_items = []
         @quote_char = default_quote_char
-      end     
+      end
     end
 
     def unquote_setting_value(setting_value)
@@ -38,35 +38,35 @@ module Util
     end
 
     def get_value
-    
+
       result = ""
       first = true
-      
+
       @subsetting_items.each { |item|
         result << @subsetting_separator unless first
-        result << item        
+        result << item
         first = false
       }
-      
+
       @quote_char + result + @quote_char
     end
 
     def get_subsetting_value(subsetting)
-    
+
       value = nil
-      
+
       @subsetting_items.each { |item|
         if(item.start_with?(subsetting))
           value = item[subsetting.length, item.length - subsetting.length]
           break
         end
       }
-      
+
       value
     end
-    
+
     def add_subsetting(subsetting, subsetting_value)
-    
+
       new_item = subsetting + (subsetting_value || '')
       found = false
 
@@ -77,19 +77,19 @@ module Util
         else
           value = item
         end
-        
+
         value
       }
-      
+
       unless found
         @subsetting_items.push(new_item)
       end
     end
 
-    def remove_subsetting(subsetting)   
+    def remove_subsetting(subsetting)
       @subsetting_items = @subsetting_items.map { |item| item.start_with?(subsetting) ? nil : item }.compact
     end
-    
+
   end
 end
 end

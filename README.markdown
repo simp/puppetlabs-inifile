@@ -16,13 +16,13 @@
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
-##Overview 
+##Overview
 
 This module adds resource types to manage settings in INI-style configuration files.
 
 ##Module Description
 
-The inifile module adds two resource types so that you can use Puppet to manage settings and subsettings in INI-style configuration files. 
+The inifile module adds two resource types so that you can use Puppet to manage settings and subsettings in INI-style configuration files.
 
 This module tries hard not to manipulate your file any more than it needs to. In most cases, it should leave the original whitespace, comments, ordering, etc. intact.
 
@@ -196,7 +196,7 @@ This module is officially [supported](https://forge.puppetlabs.com/supported) on
 * Debian 6, 7
 * Ubuntu 10.04 LTS, 12.04 LTS, 14.04 LTS
 * Solaris 10, 11
-* Windows Server 2003/2008 R2, 2012/2012 R2 
+* Windows Server 2003/2008 R2, 2012/2012 R2
 * AIX 5.3, 6.1, 7.1
 
 This module has also been tested, but is not officially supported, on:
@@ -205,12 +205,12 @@ This module has also been tested, but is not officially supported, on:
 * Windows 7
 * Mac OSX 10.9 (Mavericks)
 
-### Agent run failure with Puppet Enterprise 
+### Agent run failure with Puppet Enterprise
 
-As of Puppet Enterprise 3.3, agent runs on master fail if you are using an older, manually installed version of inifile. To solve this problem, upgrade your inifile module to version 1.1.0 or later. 
+As of Puppet Enterprise 3.3, agent runs on master fail if you are using an older, manually installed version of inifile. To solve this problem, upgrade your inifile module to version 1.1.0 or later.
 
 ##Development
- 
+
 Puppet Labs modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad of hardware, software, and deployment configurations that Puppet is intended to serve.
 
 We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
