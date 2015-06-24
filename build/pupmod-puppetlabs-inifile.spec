@@ -1,7 +1,7 @@
 Summary: Puppet Labs INIFile Module
 Name: pupmod-puppetlabs-inifile
 Version: 1.2.0
-Release: 0
+Release: 1
 License: Apache License
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -11,7 +11,7 @@ Buildarch: noarch
 Requires: simp-bootstrap >= 4.2.0
 Obsoletes: pupmod-puppetlabs-inifile-test
 
-Prefix:"/etc/puppet/environments/simp/modules"
+Prefix: /etc/puppet/environments/simp/modules
 
 %description
 This is the puppetlabs INIFile module as hosted at
@@ -36,7 +36,6 @@ cp metadata.json %{buildroot}/%{prefix}/inifile
 cp CHANGELOG.md %{buildroot}/%{prefix}/inifile
 cp Gemfile %{buildroot}/%{prefix}/inifile
 cp LICENSE %{buildroot}/%{prefix}/inifile
-cp Modulefile %{buildroot}/%{prefix}/inifile
 cp README.markdown %{buildroot}/%{prefix}/inifile
 
 mkdir -p %{buildroot}/usr/share/simp/tests/modules/inifile
@@ -48,19 +47,22 @@ mkdir -p %{buildroot}/%{prefix}/inifile
 
 %files
 %defattr(0640,root,puppet,0750)
-/etc/puppet/environments/simp/modules/inifile
+%{prefix}/inifile
 
 %post
 #!/bin/sh
 
-if [ -d /etc/puppet/environments/simp/modules/inifile/plugins ]; then
-  /bin/mv /etc/puppet/environments/simp/modules/inifile/plugins /etc/puppet/environments/simp/modules/inifile/plugins.bak
+if [ -d %{prefix}/inifile/plugins ]; then
+  /bin/mv %{prefix}/inifile/plugins %{prefix}/inifile/plugins.bak
 fi
 
 %postun
 # Post uninstall stuff
 
 %changelog
+* Wed Jun 24 2015 Trevor Vaughan <tvaughan@onyxpoint.com> - 1.2.0-1
+- Removed the obsolete Modulefile
+
 * Mon Feb 02 2015 Trevor Vaughan <tvaughan@onyxpoint.com> - 1.2.0-0
 - Incorporated puppetlabs-inifile 1.2.0 for puppetlabs-puppetdb
 
