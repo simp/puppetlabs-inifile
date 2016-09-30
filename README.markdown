@@ -331,6 +331,33 @@ Global show_diff configuraton takes priority over this one -
 
 *Optional.*  Designates the string that will appear after the section's name.  Default value: "]".
 
+##### `refreshonly`
+
+*Optional.*  A boolean to indicate whether or not the value associated with the setting should be updated if this resource is only part of a refresh event.  Default value: **false**.
+
+For example, if we want a timestamp associated with the last time a setting's value was updated, we could do something like this:
+
+~~~
+ini_setting { 'foosetting':
+  ensure  => present,
+  path    => '/tmp/file.ini',
+  section => 'foo',
+  setting => 'foosetting',
+  value   => 'bar',
+  notify  => Ini_Setting['foosetting_timestamp'],
+}
+
+$now = strftime('%Y-%m-%d %H:%M:%S')
+ini_setting {'foosetting_timestamp':
+  ensure      => present,
+  path        => '/tmp/file.ini',
+  section     => 'foo',
+  setting     => 'foosetting_timestamp',
+  value       => $now,
+  refreshonly => true,
+}
+~~~
+
 **NOTE:** This type finds all sections in the file by looking for lines like `${section_prefix}${title}${section_suffix}`.
 
 ### Type: ini_subsetting
@@ -382,6 +409,10 @@ Global show_diff configuraton takes priority over this one -
 
 *Optional.* Specifies a string to use between subsettings. Valid options: a string. Default value: " ".
 
+##### `subsetting_key_val_separator`
+
+*Optional.* Specifies a string to use between subsetting name and value (if there is a separator between the subsetting name and its value). Valid options: a string. Default value: empty string.
+
 ##### `use_exact_match`
 
 *Optional.* Whether to use partial or exact matching for subsetting. Should be set to true if the subsettings do not have values. Valid options: true, false. Default value: false.
@@ -389,6 +420,20 @@ Global show_diff configuraton takes priority over this one -
 ##### `value`
 
 *Optional.* Supplies a value for the specified subsetting. Valid options: a string. Default value: undefined.
+
+##### `insert_type`
+
+*Optional.* Selects where a new subsetting item should be inserted.
+
+* *start*  - insert at the beginning of the line.
+* *end*    - insert at the end of the line (default).
+* *before* - insert before the specified element if possible.
+* *after*  - insert after the specified element if possible.
+* *index*  - insert at the specified index number.
+
+##### `insert_value`
+
+*Optional.* The value for the insert type if the value if required.
 
 ### Function: create_ini_settings
 
@@ -421,6 +466,8 @@ Default value: '{}'.
 ##Limitations
 
 This module has been tested on [all PE-supported platforms](https://forge.puppetlabs.com/supported#compat-matrix), and no issues have been identified. Additionally, it is tested (but not supported) on Windows 7, Mac OS X 10.9, and Solaris 12.
+
+Due to (PUP-4709) the create_ini_settings function will cause errors when attempting to create multiple ini_settings in one go when using Puppet 4.0.x or 4.1.x. If needed, the temporary fix for this can be found here: https://github.com/puppetlabs/puppetlabs-inifile/pull/196.
 
 ##Development
 
